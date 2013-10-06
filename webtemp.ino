@@ -6,8 +6,9 @@
   https://github.com/ninjablocks/arduino/blob/master/DHT22/DHT22.cpp
 */
 #include "DHT.h"
-#include<stdlib.h>
+#include <stdlib.h>
 #include <Console.h>
+#include <Scheduler.h>
 
 #define LEDPIN 13
 #define DHTPIN 7
@@ -35,7 +36,7 @@ void setup() {
 
 void loop() {
   blinker(10, 1100);
-//  delay(dht.getMinimumSamplingPeriod());
+  delay(dht.getMinimumSamplingPeriod());
 
   hum = dht.getHumidity();
   tmp = dht.getTemperature();
@@ -65,6 +66,4 @@ void toggleLed() {
   ledState = !ledState;
   digitalWrite(LEDPIN, ledState);
 }
-
-
 
