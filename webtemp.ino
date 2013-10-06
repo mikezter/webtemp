@@ -29,17 +29,21 @@ void setup() {
   Bridge.begin();
   Console.begin();
 
+  Scheduler.startLoop(pollSensor);
   // Ready
   digitalWrite(LEDPIN, LOW);
 }
 
-
-void loop() {
-  blinker(10, 1100);
+void pollSensor() {
   delay(dht.getMinimumSamplingPeriod());
 
   hum = dht.getHumidity();
   tmp = dht.getTemperature();
+
+}
+
+void loop() {
+  blinker(10, 1100);
 
   Console.print(hum);
   Console.print("\t");
