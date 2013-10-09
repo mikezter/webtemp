@@ -114,7 +114,7 @@ void doApi() {
   char c;
   Bridge.get("c", &c, 1);
   Bridge.put("c", "");
-  if (c != '\0') runCommand(c);
+  runCommand(c);
 }
 
 void runCommand(char c) {
