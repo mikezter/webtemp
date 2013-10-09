@@ -1,0 +1,145 @@
+<!doctype html>
+
+<html>
+
+  <head>
+    <title>Narrow Jumbotron</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="webtemp.js"></script>
+
+    <style type="text/css">
+      /* Space out content a bit */
+      body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+      /* Everything but the jumbotron gets side spacing for mobile first views */
+      .header, .marketing, .footer {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      /* Custom page header */
+      .header {
+        border-bottom: 1px solid #e5e5e5;
+      }
+      /* Make the masthead heading the same height as the navigation */
+      .header h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 40px;
+        padding-bottom: 19px;
+      }
+      /* Custom page footer */
+      .footer {
+        padding-top: 19px;
+        color: #777;
+        border-top: 1px solid #e5e5e5;
+      }
+      /* Customize container */
+      @media(min-width: 768px) {
+        .container {
+          max-width: 730px;
+        }
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        text-align: center;
+        border-bottom: 1px solid #e5e5e5;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+      /* Supporting marketing content */
+      .marketing {
+        margin: 40px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+      /* Responsive: Portrait tablets and up */
+      @media screen and(min-width: 768px) {
+        /* Remove the padding we set earlier */
+        .header, .marketing, .footer {
+          padding-left: 0;
+          padding-right: 0;
+        }
+        /* Space out the masthead */
+        .header {
+          margin-bottom: 30px;
+        }
+        /* Remove the bottom border on the jumbotron for visual effect */
+        .jumbotron {
+          border-bottom: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+
+          <li class="active">
+          <a href="#">Temperatur</a>
+          </li>
+          <li>
+          <a href="#">Info</a>
+          </li>
+          <li>
+          <a href="contact.html">Kontakt</a>
+          </li>
+        </ul>
+        <h3 class="text-muted">Webtemp</h3>
+      </div>
+      <div class="jumbotron">
+        <h1>Raumklima</h1>
+        <p class="lead">Zeigt Temperatur und Luftfeuchtigkeit und erlaubt es Dir, die Heizungsstufe zu w&auml;hlen.</p>
+        <div class="row">
+          <div class="col-xs-6">
+            <h4>Temperatur</h4>
+            <a class="btn btn-warning tmp">24,5&deg;C</a>
+          </div>
+          <div class="col-xs-6">
+            <h4>Luftfeuchtigkeit</h4>
+            <a class="btn btn-info hum">45%</a>
+          </div>
+        </div>
+      </div>
+      <div class="row marketing">
+        <div class="col-xs-8">
+        <h4>Kontrolliere Deine Heizung</h4>
+        <p>Benutze den <span class="label label-danger">+</span> Knopf, um die Heizung auf zu drehen. Mit dem <span class="label label-info">-</span> Knopf, regelst Du sie herab.</p>
+      </div>
+      </div>
+      <div class="row marketing">
+        <div class="col-xs-6">
+          <div class="btn-toolbar">
+            <div class="btn-group">
+              <a class="btn btn-info"><i class="icon-minus"></i></a>
+            </div>
+            <div class="btn-group">
+              <a class="btn btn-danger"><i class="icon-plus"></i></a>
+            </div>
+            <div class="pull-right btn-group">
+              <a class="btn btn-warning" data-toggle="tooltip" title="first tooltip">                  <i class="icon-warning-sign"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>&copy; Manaworks 2013</p>
+    </div>
+    <!-- /container -->
+  </body>
+
+</html>
