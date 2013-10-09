@@ -14,15 +14,16 @@
 #define DIRECTION 12
 #define BRAKE 9
 #define SPEED 3
+#define DELAY 2000
 
 #define BREAK_SENSE 50
 
-boolean flag = true;
-boolean ledState = LOW;
-unsigned long previousMillis = 0;
 DHT dht;
-float hum, tmp, oldHum, oldTmp;
 Timer t;
+float hum, tmp;
+unsigned long stopTime = 0;
+unsigned long upwards = 400000;
+unsigned long downwards = 400000;
 
 int currentId = 30000;
 int currents[BREAK_SENSE];
@@ -42,10 +43,19 @@ void setup() {
   Bridge.begin();
   Console.begin();
 
-  t.every(dht.getMinimumSamplingPeriod(), pollSensor);
+  // Timers
+  t.every(DELAY, pollSensor);
+  t.every(DELAY, printReadings);
+  t.every(DELAY, putReadings);
+  t.every(1000, doApi);
 
   // Ready
   digitalWrite(LED, LOW);
+}
+
+void putReadings() {
+  Bridge.put("hum", String(hum));
+  Bridge.put("tmp", String(tmp));
 }
 
 void pollSensor() {
@@ -55,29 +65,70 @@ void pollSensor() {
 }
 
 void printReadings() {
-  if (oldHum != hum || oldTmp != tmp) {
-    Console.print(hum);
-    Console.print("\t");
-    Console.println(tmp);
+  Console.print(hum);
+  Console.print("\t");
+  Console.println(tmp);
+}
 
-    oldHum = hum;
-    oldTmp = tmp;
+void calibrate() {
+  unsigned long upwards, downwards;
+  range(LOW);
+  delay(1000);
+  upwards = range(HIGH);
+  delay(1000);
+  downwards = range(LOW);
+
+  Console.print("Calibrated: U:");
+  Console.print(upwards);
+  Console.print(" D:");
+  Console.println(downwards);
+
+  Bridge.put("downwards", String(downwards));
+  Bridge.put("upwards", String(upwards));
+}
+
+unsigned long range(bool dir) {
+  unsigned long startTime = millis();
+  unsigned long previous = stopTime;
+
+  while (previous == stopTime) {
+    digitalWrite(SPEED, HIGH);
+    digitalWrite(BRAKE, LOW);
+    digitalWrite(DIRECTION, dir);
+    delay(100);
+    checkCurrent();
   }
+
+  return stopTime - startTime;
+
 }
 
 void readCommand() {
   if (Console.available() > 0) {
     char c = Console.read();
+    runCommand(c);
+  }
+}
+
+void doApi() {
+  char c;
+  Bridge.get("c", &c, 1);
+  Bridge.put("c", "");
+  if (c != '\0') runCommand(c);
+}
+
+void runCommand(char c) {
     if (c == 'U') stepUp();
     if (c == 'D') stepDown();
     if (c == 'S') stop();
-  }
+    if (c == 'P') printReadings();
+    if (c == 'C') calibrate();
 }
 
 void stepUp() {
   stop();
   Console.println("Step up!");
-  digitalWrite(DIRECTION, LOW);
+  digitalWrite(DIRECTION, HIGH);
   digitalWrite(BRAKE, LOW);
   currentId = t.pulseImmediate(SPEED, 9000, HIGH);
 }
@@ -85,12 +136,13 @@ void stepUp() {
 void stepDown() {
   stop();
   Console.println("Step down!");
-  digitalWrite(DIRECTION, HIGH);
+  digitalWrite(DIRECTION, LOW);
   digitalWrite(BRAKE, LOW);
   currentId = t.pulseImmediate(SPEED, 9000, HIGH);
 }
 
 void stop() {
+  stopTime = millis();
   Console.println("Stop!");
   t.stop(currentId);
   digitalWrite(BRAKE, HIGH);
@@ -115,7 +167,6 @@ void checkCurrent() {
 }
 
 void loop() {
-  printReadings();
   readCommand();
   checkCurrent();
   t.update();
