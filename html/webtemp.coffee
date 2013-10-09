@@ -1,4 +1,6 @@
 class Webtemp
+  basePath: "/data"
+
   constructor: ->
     @values = {tmp: '23.80', hum: '49.10'}
     @getValues()
@@ -9,13 +11,13 @@ class Webtemp
     window.setInterval (=> @getValues()), 2000
 
   getValues: ->
-    $.getJSON "http://arduino.local/data/get", (data) =>
+    $.getJSON "#{@basePath}/get", (data) =>
       @values = data.value
       @updateView()
 
   doApi: ->
     c = $(@).data 'c'
-    $.getJSON "http://arduino.local/data/put/c/#{c}"
+    $.getJSON "#{@basePath}/put/c/#{c}"
 
   updateView: ->
 

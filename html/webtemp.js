@@ -3,6 +3,8 @@
   var Webtemp;
 
   Webtemp = (function() {
+    Webtemp.prototype.basePath = "/data";
+
     function Webtemp() {
       var _this = this;
       this.values = {
@@ -19,7 +21,7 @@
 
     Webtemp.prototype.getValues = function() {
       var _this = this;
-      return $.getJSON("http://arduino.local/data/get", function(data) {
+      return $.getJSON("" + this.basePath + "/get", function(data) {
         _this.values = data.value;
         return _this.updateView();
       });
@@ -28,7 +30,7 @@
     Webtemp.prototype.doApi = function() {
       var c;
       c = $(this).data('c');
-      return $.getJSON("http://arduino.local/data/put/c/" + c);
+      return $.getJSON("" + this.basePath + "/put/c/" + c);
     };
 
     Webtemp.prototype.updateView = function() {
