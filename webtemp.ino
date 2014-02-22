@@ -11,33 +11,19 @@
 
 #define LED 13
 #define DHTPIN 7
-#define DIRECTION 12
-#define BRAKE 9
-#define SPEED 3
 #define DELAY 2000
-
-#define BREAK_SENSE 50
 
 DHT dht;
 Timer t;
 float hum, tmp;
-unsigned long stopTime = 0;
-unsigned long upwards = 400000;
-unsigned long downwards = 400000;
-
-int currentId = 30000;
-int currents[BREAK_SENSE];
-int currentIndex = 0;
 
 #include "valve.h"
 
 void setup() {
+  valve_setup();
+
   // Begin
   pinMode(LED, OUTPUT);
-  pinMode(DIRECTION, OUTPUT); //Initiates Motor Channel A
-  pinMode(BRAKE, OUTPUT); //Initiates Brake Channel A
-
-  digitalWrite(BRAKE, LOW);
   digitalWrite(LED, HIGH);
 
   // Setup

@@ -2,6 +2,25 @@
  * used to control a radiator valve
  */
 
+
+#define BREAK_SENSE 50
+#define DIRECTION 12
+#define BRAKE 9
+#define SPEED 3
+
+int currentId = 30000;
+int currents[BREAK_SENSE];
+int currentIndex = 0;
+unsigned long stopTime = 0;
+unsigned long upwards = 400000;
+unsigned long downwards = 400000;
+
+void valve_setup() {
+  pinMode(DIRECTION, OUTPUT);
+  digitalWrite(BRAKE, LOW);
+  pinMode(BRAKE, OUTPUT);
+}
+
 void stop() {
   stopTime = millis();
   Console.println("Stop!");
