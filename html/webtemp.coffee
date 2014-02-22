@@ -2,7 +2,11 @@ class Webtemp
   basePath: "/data"
 
   constructor: ->
-    @values = {tmp: '23.80', hum: '49.10'}
+    @values = {
+      tmp: '23.80',
+      hum: '49.10'
+    }
+
     @getValues()
     @updateView()
 
