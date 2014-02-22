@@ -47,7 +47,8 @@ void setup() {
   t.every(DELAY, pollSensor);
   t.every(DELAY, printReadings);
   t.every(DELAY, putReadings);
-  t.every(1000, doApi);
+  t.every(DELAY, doApi);
+  t.every(DELAY * 10, softReset);
 
   // Ready
   digitalWrite(LED, LOW);
@@ -62,6 +63,10 @@ void pollSensor() {
   hum = dht.getHumidity();
   tmp = dht.getTemperature();
   t.pulseImmediate(LED, 10, HIGH);
+}
+
+void softReset() {
+  asm volatile("jmp 0");
 }
 
 void printReadings() {
