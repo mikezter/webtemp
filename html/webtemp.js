@@ -13,7 +13,9 @@
       };
       this.getValues();
       this.updateView();
-      $('.command').on('click', this.doApi);
+      $('.command').on('click', function(event) {
+        return _this.doApi(event.currentTarget);
+      });
       window.setInterval((function() {
         return _this.getValues();
       }), 2000);
@@ -27,9 +29,9 @@
       });
     };
 
-    Webtemp.prototype.doApi = function() {
+    Webtemp.prototype.doApi = function(element) {
       var c;
-      c = $(this).data('c');
+      c = $(element).data('c');
       return $.getJSON("" + this.basePath + "/put/c/" + c);
     };
 

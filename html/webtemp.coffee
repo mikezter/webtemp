@@ -10,7 +10,8 @@ class Webtemp
     @getValues()
     @updateView()
 
-    $('.command').on 'click', @doApi
+    $('.command').on 'click', (event) =>
+      @doApi(event.currentTarget)
 
     window.setInterval (=> @getValues()), 2000
 
@@ -19,8 +20,8 @@ class Webtemp
       @values = data.value
       @updateView()
 
-  doApi: ->
-    c = $(@).data 'c'
+  doApi: (element) ->
+    c = $(element).data 'c'
     $.getJSON "#{@basePath}/put/c/#{c}"
 
   updateView: ->
